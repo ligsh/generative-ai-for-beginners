@@ -12,11 +12,15 @@ To start taking this course, you will need to complete the following steps.
 
 [Fork this entire repo](https://github.com/microsoft/generative-ai-for-beginners/fork?WT.mc_id=academic-105485-koreyst) to your own GitHub account to be able to change any code and complete the challenges. You can also [star (🌟) this repo](https://docs.github.com/en/get-started/exploring-projects-on-github/saving-repositories-with-stars?WT.mc_id=academic-105485-koreyst) to find it and related repos easier.
 
+done
+
 ### 2. Create a codespace
 
 To avoid any dependency issues when running the code, we recommend running this course in a GitHub codespace.
 
 This can be created by selecting the `Code` option on your forked version of this repo and selecting the **Codespaces** option.
+
+这一步我没有做，因为“墙”的原因，github上的codespace功能不能用。
 
 ### 3. Storing Your API Keys
 
@@ -27,6 +31,13 @@ Keeping your API keys safe and secure is important when building any type of app
 ## How to Run locally on your computer
 
 To run the code locally on your computer, you would need to have some version of [Python installed](https://www.python.org/downloads/?WT.mc_id=academic-105485-koreyst).
+
+我的Macbook上已经预先安装了python，通过：
+
+```
+pyton3
+```
+可以看到预先安装的python版本是3.9.6；
 
 To then use the repository, you need to clone it:
 
@@ -39,7 +50,12 @@ Now you have everything checked out and can start learning and work with the cod
 
 ### Installing miniconda (optional step)
 
+
+我看不懂这个，没有执行这个可选步骤；
+
 There are advantages to installing  **[miniconda](https://conda.io/en/latest/miniconda.html?WT.mc_id=academic-105485-koreyst)** - it is rather lightweight installation that supports `conda` package manager for different Python **virtual environments**. `conda` makes it easy to install and switch between different Python versions and packages, and also to install packages that are not available via `pip`.
+
+conda 是python的一个包管理软件，它可以使安装以及切换不同python版本和package变得更容易，还可以安装pip不提供的包。miniconda是conda的一个轻量版本？
 
 After you install miniconda, you need to clone the repository (if you haven't already done so) and create a virtual environment to be used for this course:
 
