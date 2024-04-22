@@ -72,23 +72,23 @@ Most of the recent generative AI models – also known as Large Language Models 
 
 In the next chapter we are going to explore different types of Generative AI models, but for now let’s have a look at how large language models work, with a focus on OpenAI GPT (Generative Pre-trained Transformer) models.
 
-* **Tokenizer, text to numbers**（tokenizer，从文本到数字）: Large Language Models receive a text as input and generate a text as output. However, being statistical models, they work much better with numbers than text sequences. That’s why every input to the model is processed by a tokenizer, before being used by the core model. A token is a chunk of text – consisting of a variable number of characters, so the tokenizer's main task is splitting the input into an array of tokens. Then, each token is mapped with a token index, which is the integer encoding of the original text chunk.
+* **Tokenizer, text to numbers**（tokenizer，从文本到数字）: Large Language Models receive a text as input and generate a text as output(LLM接受文本作为输入，生成文本作为输出). However, being statistical models, they work much better with numbers than text sequences. That’s why every input to the model is processed by a tokenizer, before being used by the core model(在被核心模型处理之前，每个输入都需要被tokenizer进行处理). A token is a chunk of text – consisting of a variable number of characters, so the tokenizer's main task is splitting the input into an array of tokens. Then, each token is mapped with a token index, which is the integer encoding of the original text chunk(然后，每个token映射到token index，token index是原始文本块的整数编码).
 
 ![Example of tokenization](./images/tokenizer-example.png?WT.mc_id=academic-105485-koreyst)
 
-* **Predicting output tokens**: Given n tokens as input (with max n varying from one model to another), the model is able to predict one token as output. This token is then incorporated into the input of the next iteration, in an expanding window pattern, enabling a better user experience of getting one (or multiple) sentence as an answer. This explains why, if you ever played with ChatGPT, you might have noticed that sometimes it looks like it stops in the middle of a sentence.
+* **Predicting output tokens(预测输出tokens）**: Given n tokens as input (with max n varying from one model to another)(给定n个token作为input，不同的model能够接受的n的最大值不同), the model is able to predict one token as output(model可以预测一个token作为输出). This token is then incorporated into the input of the next iteration, in an expanding window pattern, enabling a better user experience of getting one (or multiple) sentence as an answer(这个token然后又被组合到input中，由model在根据新的input预测下一个token，如此循环往复). This explains why, if you ever played with ChatGPT, you might have noticed that sometimes it looks like it stops in the middle of a sentence.
 
-* **Selection process, probability distribution**: The output token is chosen by the model according to its probability of occurring after the current text sequence. This is because the model predicts a probability distribution over all possible ‘next tokens’, calculated based on its training. However, not always the token with the highest probability is chosen from the resulting distribution. A degree of randomness is added to this choice, in a way that the model acts in a non-deterministic fashion - we do not get the exact same output for the same input. This degree of randomness is added to simulate the process of creative thinking and it can be tuned using a model parameter called temperature.
+* **Selection process, probability distribution**: The output token is chosen by the model according to its probability of occurring after the current text sequence(被模型所选择的输出token是基于其在当前文本序列之后发生的可能性). This is because the model predicts a probability distribution over all possible ‘next tokens’, calculated based on its training. However, not always the token with the highest probability is chosen from the resulting distribution(具有最高可能性的token并不总是被选中作为输出). A degree of randomness is added to this choice(在选择下一个token的过程中，加入了一定程度的随机性), in a way that the model acts in a non-deterministic fashion - we do not get the exact same output for the same input. This degree of randomness is added to simulate the process of creative thinking and it can be tuned using a model parameter called temperature(加入这种随机性来模拟创造性思维，这种随机性可以使用被称为“温度”的模型参数进行调整).
 
-## How can our startup leverage Large Language Models?
+## How can our startup leverage Large Language Models?(我们该怎言开始借助LLM？)
 
 Now that we have a better understanding of the inner working of a large language model, let’s see some practical examples of the most common tasks they can perform pretty well, with an eye to our business scenario(现在我们已经对LLM的内部工作有了更好的理解，让我们看一些它们完成很好的最常见任务的例子).
 We said that the main capability of a Large Language Model is *generating a text from scratch, starting from a textual input, written in natural language*(我们已经说过，LLM的主要能力是：以自然语言书写的文本作为输入，从0开始生成文本).
 
 But what kind of textual input and output?(那么是什么类型的文本输入和输出呢？)
-The input of a large language model is known as prompt(大语言模型的输入被称为prompt), while the output is known as completion(而其输出称为completion), term that refers to the model mechanism of generating the next token to complete the current input. We are going to dive deep into what is a prompt and how to design it in a way to get the most out of our model. But for now, let’s just say that a prompt may include(现在，我们可以认为prompt包括):
+The input of a large language model is known as prompt(大语言模型的输入被称为prompt), while the output is known as completion(而其输出称为completion), term that refers to the model mechanism of generating the next token to complete the current input(这个属于来自于模型生成下一个token来“完成”当前输入的机制). We are going to dive deep into what is a prompt and how to design it in a way to get the most out of our model(我们将深入了解什么是prompt，以及如何来设计prompt). But for now, let’s just say that a prompt may include(现在，我们可以认为prompt包括):
 
-* An **instruction** specifying the type of output we expect from the model. This instruction sometimes might embed some examples or some additional data(一个指令，制定我们期望从模型中获得输出的类型。这个指令有时会包含一些示例或一些条件数据).
+* An **instruction** specifying the type of output we expect from the model. This instruction sometimes might embed some examples or some additional data(一个指令，指定我们期望从模型中获得输出的类型。这个指令有时会包含一些示例或一些条件数据).
 
     1. Summarization of an article, book, product reviews and more, along with extraction of insights from unstructured data.
     
@@ -108,13 +108,13 @@ The input of a large language model is known as prompt(大语言模型的输入�
 
 <br>
 
-* A chunk of **text to complete**, which implicitly is an ask for writing assistance(一段未完成的文本，这是个隐式的).
+* A chunk of **text to complete**, which implicitly is an ask for writing assistance(一段未完成的文本，这是个隐式的请求).
    
 ![Example of text completion](./images/text-completion-example.png?WT.mc_id=academic-105485-koreyst)
 
 <br>
 
-* A chunk of **code** together with the ask of explaining and documenting it, or a comment asking to generate a piece of code performing a specific task.
+* A chunk of **code** together with the ask of explaining and documenting it, or a comment asking to generate a piece of code performing a specific task（要求对一段程序代码进行解释或文档说明，或者是针对一个“注释”要求生成一段代码来执行特定任务）.
 
 ![Coding example](./images/coding-example.png?WT.mc_id=academic-105485-koreyst)
 
@@ -122,9 +122,9 @@ The input of a large language model is known as prompt(大语言模型的输入�
 
 The examples above are quite simple and don’t want to be an exhaustive demonstration of Large Language Models capabilities. They just want to show the potential of using generative AI, in particular but not limited to educational context.
 
-Also, the output of a generative AI model is not perfect and sometimes the creativity of the model can work against it, resulting in an output which is a combination of words that the human user can interpret as a mystification of reality, or it can be offensive. Generative AI is not intelligent - at least in the more comprehensive definition of intelligence, including critical and creative reasoning or emotional intelligence; it is not deterministic, and it is not trustworthy, since fabrications, such as erroneous references, content, and statements, may be combined with correct information, and presented in a persuasive and confident manner. In the following lessons, we’ll be dealing with all these limitations and we’ll see what we can do to mitigate them.
+Also, the output of a generative AI model is not perfect and sometimes the creativity of the model can work against it, resulting in an output which is a combination of words that the human user can interpret as a mystification of reality, or it can be offensive(同时，生成式AI model的输出并不完美，有时模型的创造性导致的输出，人类会迷惑不解或感到具有冒犯性). Generative AI is not intelligent - at least in the more comprehensive definition of intelligence, including critical and creative reasoning or emotional intelligence; it is not deterministic, and it is not trustworthy, since fabrications, such as erroneous references, content, and statements, may be combined with correct information, and presented in a persuasive and confident manner. In the following lessons, we’ll be dealing with all these limitations and we’ll see what we can do to mitigate them.
 
-## Assignment
+## Assignment 作业
 
 Your assignment is to read up more on [generative AI](https://en.wikipedia.org/wiki/Generative_artificial_intelligence?WT.mc_id=academic-105485-koreyst) and try to identify an area where you would add generative AI today that doesn't have it. How would the impact be different from doing it the "old way", can you do something you couldn't before, or are you faster? Write a 300 word summary on what your dream AI startup would look like and include headers like "Problem", "How I would use AI", "Impact" and optionally a business plan. 
 
